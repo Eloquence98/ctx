@@ -1,0 +1,32 @@
+{
+  "name": "ctx",
+  "version": "0.1.0",
+  "description": "Generate AI-ready context from your codebase structure",
+  "type": "module",
+  "bin": {
+    "ctx": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsx src/cli.ts",
+    "test": "tsx src/cli.ts ../your-test-project"
+  },
+  "keywords": [
+    "ai",
+    "context",
+    "codebase",
+    "documentation",
+    "cli"
+  ],
+  "author": "your-name",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0",
+    "tsx": "^4.0.0"
+  },
+  "dependencies": {
+    "commander": "^12.0.0",
+    "fast-glob": "^3.3.0"
+  }
+}
