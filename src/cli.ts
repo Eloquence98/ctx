@@ -14,6 +14,7 @@ program
   .version("0.1.0")
   .argument("[path]", "Path to scan", "./src")
   .option("-o, --output <format>", "Output format: md, json", "md")
+  .option("--ai", "Output in AI-optimized compact format")
   .action(async (targetPath: string, options) => {
     const absolutePath = path.resolve(process.cwd(), targetPath);
 
@@ -50,7 +51,10 @@ program
       };
 
       // Output
-      if (options.output === "json") {
+      if (options.ai) {
+        const { formatAI } = await import("./formatters/ai.js");
+        console.log(formatAI(context, absolutePath));
+      } else if (options.output === "json") {
         console.log(JSON.stringify(contextToJSON(context), null, 2));
       } else {
         console.log(formatMarkdown(context, absolutePath));
