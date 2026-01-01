@@ -1,7 +1,7 @@
 {
   "name": "ctx",
   "version": "0.1.0",
-  "description": "Generate AI-ready context from your codebase structure",
+  "description": "Generate AI-ready context from your codebase. One command, zero config.",
   "type": "module",
   "bin": {
     "ctx": "./dist/cli.js"
@@ -9,21 +9,32 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/cli.ts",
-    "test": "tsx src/cli.ts ../your-test-project"
+    "test": "tsx src/cli.ts ."
   },
   "keywords": [
     "ai",
     "context",
     "codebase",
     "documentation",
-    "cli"
+    "cli",
+    "typescript",
+    "nextjs",
+    "react"
   ],
-  "author": "your-name",
+  "author": "Eloquence98",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Eloquence98/ctx.git"
+  },
+  "homepage": "https://github.com/Eloquence98/ctx",
+  "files": [
+    "dist"
+  ],
   "devDependencies": {
     "@types/node": "^20.0.0",
-    "typescript": "^5.0.0",
-    "tsx": "^4.0.0"
+    "tsx": "^4.0.0",
+    "typescript": "^5.0.0"
   },
   "dependencies": {
     "commander": "^12.0.0",
