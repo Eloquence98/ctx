@@ -11,6 +11,7 @@ Generate AI-ready context from your codebase in seconds.
 AI assistants do not understand your project unless you explain it.
 
 Without ctx, you usually have to:
+
 - Manually copy files
 - Describe folder structure
 - Explain what exists and how things connect
@@ -32,18 +33,21 @@ Without ctx, you usually have to:
 ## Installation
 
 ### No install (recommended)
+
 ```bash
-npx ctx ./src
+npx @eloquence98/ctx ./src
 ```
 
 ### Global install
+
 ```bash
-npm install -g ctx
+npm install -g @eloquence98/ctx
 ```
 
 ### Local install (dev dependency)
+
 ```bash
-npm install --save-dev ctx
+npm install --save-dev @eloquence98/ctx
 ```
 
 ---
@@ -51,21 +55,25 @@ npm install --save-dev ctx
 ## Usage
 
 ### Scan a directory
+
 ```bash
 ctx ./src
 ```
 
 ### Scan current directory
+
 ```bash
 ctx .
 ```
 
 ### Output as JSON
+
 ```bash
 ctx ./src -o json
 ```
 
 ### Write output to a file
+
 ```bash
 ctx ./src > CONTEXT.md
 ```
@@ -75,12 +83,14 @@ ctx ./src > CONTEXT.md
 ## What Gets Extracted
 
 ### Code Symbols
+
 - Functions
 - Constants
 - Types
 - Interfaces
 
 ### Project Structure
+
 - Routes (App Router / Pages Router)
 - Features or modules
 - Components
@@ -104,6 +114,7 @@ Detection is convention-based and works with most modern JavaScript and TypeScri
 ## Output Philosophy
 
 The output is:
+
 - Minimal
 - Structured
 - Human-readable

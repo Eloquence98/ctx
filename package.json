@@ -1,5 +1,5 @@
 {
-  "name": "ctx",
+  "name": "@eloquence98/ctx",
   "version": "0.1.0",
   "description": "Generate AI-ready context from your codebase. One command, zero config.",
   "type": "module",
