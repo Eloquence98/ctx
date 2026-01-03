@@ -12,7 +12,7 @@ import { detectProject, getProjectLabel } from "./detectors/index.js";
 program
   .name("ctx")
   .description("Generate AI-ready context from your codebase")
-  .version("0.1.3")
+  .version("0.1.4")
   .argument("[path]", "Path to scan", "./src")
   .option("-o, --output <format>", "Output format: md, json", "md")
   .option("--ai", "Output in AI-optimized compact format")
