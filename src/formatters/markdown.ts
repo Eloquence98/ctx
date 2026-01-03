@@ -1,65 +1,73 @@
-import path from "path";
-import type { FileExports, ProjectContext } from "../types.js";
+import type { FileExports } from "../types.js";
+import type { AdapterContext } from "../adapters/types.js";
 
-export function formatMarkdown(data: ProjectContext, basePath: string): string {
+export function formatMarkdown(data: AdapterContext): string {
   let output = "";
 
-  // Routes section
-  if (data.routes.length > 0) {
-    output += `=== ROUTES (src/app) ===\n\n`;
+  // Project type header
+  output += `📦 Project: ${data.projectType}\n\n`;
+
+  // Routes section (if exists)
+  if (data.routes && data.routes.length > 0) {
+    output += `=== ROUTES ===\n\n`;
     for (const route of data.routes) {
       output += `${route}\n`;
     }
     output += "\n";
   }
 
-  // Features section
-  if (data.features.size > 0) {
-    output += `=== FEATURES ===\n\n`;
-    output += formatFolderGroup(data.features);
-  }
+  // All sections
+  for (const [sectionName, files] of data.sections) {
+    if (sectionName === "_root") continue;
+    if (files.length === 0) continue;
 
-  // Components section
-  if (data.components.size > 0) {
-    output += `=== COMPONENTS ===\n\n`;
-    output += formatFolderGroup(data.components);
-  }
+    // Check if any file has exports
+    const hasExports = files.some(
+      (f) =>
+        f.functions.length > 0 ||
+        f.constants.length > 0 ||
+        f.types.length > 0 ||
+        f.interfaces.length > 0 ||
+        f.classes.length > 0
+    );
 
-  // Hooks section
-  if (data.hooks.length > 0) {
-    output += `=== HOOKS ===\n\n`;
-    for (const file of data.hooks) {
-      output += formatSingleFile(file);
+    if (!hasExports) continue;
+
+    output += `=== ${sectionName.toUpperCase()} ===\n\n`;
+
+    for (const file of files) {
+      output += formatFile(file);
     }
+
     output += "\n";
   }
 
-  // Lib section
-  if (data.lib.size > 0) {
-    output += `=== LIB ===\n\n`;
-    output += formatFolderGroup(data.lib);
+  // Root files last
+  const rootFiles = data.sections.get("_root");
+  if (rootFiles && rootFiles.length > 0) {
+    const hasRootExports = rootFiles.some(
+      (f) =>
+        f.functions.length > 0 ||
+        f.constants.length > 0 ||
+        f.types.length > 0 ||
+        f.interfaces.length > 0 ||
+        f.classes.length > 0
+    );
+
+    if (hasRootExports) {
+      output += `=== ROOT FILES ===\n\n`;
+      for (const file of rootFiles) {
+        output += formatFile(file);
+      }
+      output += "\n";
+    }
   }
 
   output += `=== DONE ===\n`;
   return output;
 }
 
-function formatFolderGroup(folders: Map<string, FileExports[]>): string {
-  let output = "";
-
-  for (const [folderName, files] of folders) {
-    output += `${folderName}/\n`;
-
-    for (const file of files) {
-      output += formatSingleFile(file);
-    }
-    output += "\n";
-  }
-
-  return output;
-}
-
-function formatSingleFile(file: FileExports): string {
+function formatFile(file: FileExports): string {
   const hasExports =
     file.functions.length > 0 ||
     file.constants.length > 0 ||
