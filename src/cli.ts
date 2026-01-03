@@ -13,7 +13,7 @@ import { formatAI } from "./formatters/ai.js";
 program
   .name("ctx")
   .description("Generate AI-ready context from your codebase")
-  .version("0.1.4")
+  .version("0.1.5")
   .argument("[path]", "Path to scan", ".")
   .option("-o, --output <format>", "Output format: md, json", "md")
   .option("--ai", "Output in AI-optimized compact format")
