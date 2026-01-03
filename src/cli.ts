@@ -7,18 +7,24 @@ import { scanDirectory, getRoutes } from "./scanner.js";
 import { parseFile } from "./parser.js";
 import { formatMarkdown } from "./formatters/index.js";
 import type { FileExports, ProjectContext } from "./types.js";
+import { detectProject, getProjectLabel } from "./detectors/index.js";
 
 program
   .name("ctx")
   .description("Generate AI-ready context from your codebase")
-  .version("0.1.0")
+  .version("0.1.3")
   .argument("[path]", "Path to scan", "./src")
   .option("-o, --output <format>", "Output format: md, json", "md")
   .option("--ai", "Output in AI-optimized compact format")
   .action(async (targetPath: string, options) => {
     const absolutePath = path.resolve(process.cwd(), targetPath);
 
+    // Detect project type
+    const projectRoot = await findProjectRoot(absolutePath);
+    const projectType = await detectProject(projectRoot);
+
     console.log(`\n📁 Scanning ${absolutePath}...\n`);
+    console.log(`📦 Detected: ${getProjectLabel(projectType)}\n`);
 
     try {
       // Scan all files
@@ -65,6 +71,21 @@ program
     }
   });
 
+async function findProjectRoot(startDir: string): Promise<string> {
+  let current = startDir;
+
+  while (current !== path.dirname(current)) {
+    try {
+      await fs.access(path.join(current, "package.json"));
+      return current;
+    } catch {
+      current = path.dirname(current);
+    }
+  }
+
+  return startDir;
+}
+
 async function findAppDirectory(basePath: string): Promise<string | null> {
   const possiblePaths = [
     path.join(basePath, "app"),
@@ -79,7 +100,7 @@ async function findAppDirectory(basePath: string): Promise<string | null> {
         return p;
       }
     } catch {
-      // Path doesn't exist, try next
+      // try next
     }
   }
 
