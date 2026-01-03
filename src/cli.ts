@@ -14,7 +14,7 @@ import { scanDirectory } from "./scanner.js";
 program
   .name("ctx")
   .description("Generate AI-ready context from your codebase")
-  .version("0.1.5")
+  .version("0.1.6")
   .argument("[path]", "Path to scan", ".")
   .option("--human", "Human-readable output for onboarding")
   .option("--raw", "Verbose output with all details")
