@@ -1,31 +1,49 @@
 # ctx
 
-Generate AI-ready context from your codebase.
+Scan your codebase. Get a clean summary. Paste it to AI.
 
 ## Usage
 
 ```bash
-npx @eloquence98/ctx ./src
-```
-
-That's it. Copy the output, paste it to ChatGPT/Claude.
-
-## Options
-
-```bash
-# AI-optimized compact format
-npx @eloquence98/ctx ./src --ai
+# Scan current directory
+ctx .
 ```
 
 ```bash
-# JSON output
-npx @eloquence98/ctx ./src -o json
+# Scan specific folder
+ctx ./src
 ```
 
 ```bash
-# Save to file
-npx @eloquence98/ctx ./src > context.md
+# Human-readable output
+ctx ./src --human
 ```
+
+## Output Example
+
+```bash
+# Codebase Context
+
+## Routes
+- /admin
+- /admin/orders
+- /client/[slug]/orders
+
+## Components
+- navbar.tsx: Navbar
+- sidebar.tsx: Sidebar
+
+## Hooks
+- useAuth
+- useFetch
+
+## Utils
+- utils.ts: cn, formatDate
+```
+
+## That's It
+
+Copy. Paste to ChatGPT/Claude. Done.
 
 ## License
 

@@ -1,25 +1,18 @@
-export interface FileExports {
-  filePath: string;
-  fileName: string;
-  functions: string[];
-  constants: string[];
-  types: string[];
-  interfaces: string[];
-  classes: string[];
-  defaultExport?: string;
+export interface ParsedFile {
+  path: string;
+  name: string;
+  exports: {
+    functions: string[];
+    constants: string[];
+    types: string[];
+    components: string[];
+  };
 }
 
-export interface ScanOptions {
-  entry: string;
-  extensions: string[];
-  ignore: string[];
-  maxDepth: number;
-}
-
-export interface ProjectContext {
+export interface OrganizedContext {
   routes: string[];
-  features: Map<string, FileExports[]>;
-  hooks: FileExports[];
-  lib: Map<string, FileExports[]>;
-  components: Map<string, FileExports[]>;
+  components: ParsedFile[];
+  hooks: ParsedFile[];
+  utils: ParsedFile[];
+  other: ParsedFile[];
 }

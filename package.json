@@ -1,7 +1,7 @@
 {
   "name": "@eloquence98/ctx",
-  "version": "0.1.6",
-  "description": "Generate AI-ready context from your codebase. One command, zero config.",
+  "version": "0.2.0",
+  "description": "Scan your codebase. Get a clean summary. Paste it to AI.",
   "type": "module",
   "bin": {
     "ctx": "dist/cli.js"
@@ -35,9 +35,5 @@
     "@types/node": "^20.0.0",
     "tsx": "^4.0.0",
     "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "commander": "^12.0.0",
-    "fast-glob": "^3.3.0"
   }
 }
