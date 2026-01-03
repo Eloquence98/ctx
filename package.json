@@ -1,6 +1,6 @@
 {
   "name": "@eloquence98/ctx",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Scan your codebase. Get a clean summary. Paste it to AI.",
   "type": "module",
   "bin": {

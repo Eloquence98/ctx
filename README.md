@@ -5,17 +5,21 @@ Scan your codebase. Get a clean summary. Paste it to AI.
 ## Usage
 
 ```bash
-# Scan current directory
-ctx .
-```
-
-```bash
-# Scan specific folder
-ctx ./src
+npx @eloquence98/ctx ./src
 ```
 
 ```bash
 # Human-readable output
+npx @eloquence98/ctx ./src --human
+```
+
+## Install (optional)
+
+```bash
+npm install -g @eloquence98/ctx
+
+# Then just use
+ctx ./src
 ctx ./src --human
 ```
 
