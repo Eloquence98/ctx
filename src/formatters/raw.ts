@@ -1,7 +1,7 @@
 import type { FileExports } from "../types.js";
 import type { AdapterContext } from "../adapters/types.js";
 
-export function formatAI(data: AdapterContext): string {
+export function formatRaw(data: AdapterContext): string {
   const lines: string[] = [];
 
   lines.push(`# ${data.projectType} Project Context`);
