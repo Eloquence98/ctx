@@ -6,6 +6,7 @@ export const defaultConfig: ScanOptions = {
   ignore: [
     "node_modules",
     ".git",
+    ".directory",
     "dist",
     "build",
     ".next",
