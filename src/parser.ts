@@ -5,46 +5,38 @@ import type { ParsedFile } from "./types.js";
 export async function parse(filePath: string): Promise<ParsedFile> {
   const content = await fs.readFile(filePath, "utf-8");
   const name = path.basename(filePath);
+  const exports: string[] = [];
 
-  const functions: string[] = [];
-  const constants: string[] = [];
-  const types: string[] = [];
-  const components: string[] = [];
-
-  // Export function
+  // export function Name
   for (const match of content.matchAll(
     /export\s+(?:async\s+)?function\s+(\w+)/g
   )) {
-    const fn = match[1];
-    isPascalCase(fn) ? components.push(fn) : functions.push(fn);
+    exports.push(match[1]);
   }
 
-  // Export const
-  for (const match of content.matchAll(/export\s+const\s+(\w+)\s*=/g)) {
-    const n = match[1];
-    if (isPascalCase(n)) {
-      components.push(n);
-    } else if (n.startsWith("use")) {
-      functions.push(n);
-    } else {
-      constants.push(n);
-    }
+  // export const Name
+  for (const match of content.matchAll(/export\s+const\s+(\w+)/g)) {
+    exports.push(match[1]);
   }
 
-  // Types & interfaces
+  // export type/interface Name
   for (const match of content.matchAll(
     /export\s+(?:type|interface)\s+(\w+)/g
   )) {
-    types.push(match[1]);
+    exports.push(match[1]);
   }
 
-  return {
-    path: filePath,
-    name,
-    exports: { functions, constants, types, components },
-  };
-}
+  // export class Name
+  for (const match of content.matchAll(/export\s+class\s+(\w+)/g)) {
+    exports.push(match[1]);
+  }
 
-function isPascalCase(str: string): boolean {
-  return /^[A-Z][a-zA-Z0-9]*$/.test(str);
+  // export default function Name / class Name
+  for (const match of content.matchAll(
+    /export\s+default\s+(?:function|class)\s+(\w+)/g
+  )) {
+    exports.push(match[1]);
+  }
+
+  return { path: filePath, name, exports };
 }

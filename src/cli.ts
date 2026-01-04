@@ -3,18 +3,15 @@
 import path from "path";
 import { scan } from "./scanner.js";
 import { parse } from "./parser.js";
-import { organize } from "./organizer.js";
-import { formatAI } from "./formatters/ai.js";
-import { formatHuman } from "./formatters/human.js";
+import { format } from "./formatter.js";
 
 const args = process.argv.slice(2);
-const targetPath = args.find((a) => !a.startsWith("-")) || ".";
-const humanMode = args.includes("--human");
+const targetPath = args[0] || ".";
 
 async function main() {
   const dir = path.resolve(process.cwd(), targetPath);
 
-  // 1. Scan
+  // Scan
   const files = await scan(dir);
 
   if (files.length === 0) {
@@ -22,16 +19,11 @@ async function main() {
     process.exit(1);
   }
 
-  // 2. Parse
+  // Parse
   const parsed = await Promise.all(files.map(parse));
 
-  // 3. Organize
-  const context = await organize(parsed, dir);
-
-  // 4. Format
-  const output = humanMode ? formatHuman(context) : formatAI(context);
-
-  console.log(output);
+  // Format and print
+  console.log(format(parsed, dir));
 }
 
 main().catch(console.error);
