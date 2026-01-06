@@ -1,7 +1,7 @@
 {
   "name": "@eloquence98/ctx",
-  "version": "0.3.0",
-  "description": "Scan your codebase. Get a clean summary. Paste it to AI.",
+  "version": "0.3.1",
+  "description": "Generate a truthful structural map of your codebase for AI and humans.",
   "type": "module",
   "bin": {
     "ctx": "dist/cli.js"
@@ -15,11 +15,9 @@
     "ai",
     "context",
     "codebase",
-    "documentation",
     "cli",
     "typescript",
-    "nextjs",
-    "react"
+    "javascript"
   ],
   "author": "Eloquence98",
   "license": "MIT",

@@ -4,7 +4,7 @@ Dump a truthful structural index of a codebase.
 
 No analysis. No opinions. No guessing.
 
-ctx scans a directory and prints a map of folders, files, and statically detectable exported symbols. It tells you exactly what exists—nothing more, nothing less.
+ctx scans a directory and prints a map of folders, files, and trivially detectable exported symbols. It tells you exactly what exists nothing more, nothing less.
 
 ## ⚡️ Quick Start
 
@@ -20,7 +20,7 @@ ctx provides a high-level map of a project. It identifies:
 
 - 📂 Folders
 - 📄 Files
-- ➡️ Exported Symbols (when statically detectable)
+- ➡️ Exported Symbols (when trivially detectable; ignores re-exports, computed exports, and unusual formatting)
 
 ## Example Output
 
@@ -34,11 +34,11 @@ src/
    └─ styles.css
 ```
 
-If exports cannot be determined (e.g., non-code files or complex dynamic exports), the file is listed without symbols.
+Files whose exports cannot be determined are listed without symbols.
 
 ## 🧠 Why this exists
 
-When working with LLMs (ChatGPT, Claude, etc.), new contributors, or legacy codebases, you don't always need the content of the files immediately; you need to understand the topology of the project first.
+When working with LLMs, new contributors, or legacy codebases, you don’t always need the content of the files immediately; you need to understand the topology of the project first.
 
 ctx gives you that map.
 
@@ -52,13 +52,14 @@ ctx is intentionally dumb. That is why it is reliable.
 
 It does not:
 
-- ❌ Interpret architecture or infer domains.
+- ❌ Interpret architecture or infer domains
 - ❌ Explain code intent.
 - ❌ Refactor or execute code.
 - ❌ Read node_modules or .git folders.
-- ❌ Read environment variables.
+- ❌ Read environment variables
+- ❌ Parse complex exports (re-exports, barrel files, computed names)
 
-It is not a framework detector, a dependency graph tool, or a documentation generator.
+See [LIMITATIONS.md](./LIMITATIONS.md) for detailed edge cases.
 
 ## ⚙️ Configuration
 
@@ -66,15 +67,19 @@ No configuration required.
 
 ctx automatically ignores:
 
-- node_modules
-- .git
-- Build outputs (dist, build, etc.)
-- Environment files (.env)
-- Test files (.test., .spec.)
+- `node_modules`
+- `.git`
+- Build outputs (`dist`, `build`, etc.)
+- Environment files (`.env`)
+- Test files (`.test`., `.spec`.)
+
+Only `.ts`, `.tsx`, `.js`, `.jsx` files are scanned.
 
 ## 💡 Philosophy
 
-Don't explain the code. Show the codebase as it exists.
+Don’t explain the code. Show the codebase as it exists.
+
+ctx is intentionally shallow: it parses only what can be reliably read from source text.
 
 ## ⚡️ Install (optional)
 
@@ -85,4 +90,4 @@ ctx ./src
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT ](https://choosealicense.com/licenses/mit/)
