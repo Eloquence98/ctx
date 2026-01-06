@@ -59,7 +59,7 @@ It does not:
 - ❌ Read environment variables
 - ❌ Parse complex exports (re-exports, barrel files, computed names)
 
-See [LIMITATIONS.md](./LIMITATIONS.md) for detailed edge cases.
+See [LIMITATIONS.md](https://github.com/Eloquence98/ctx/blob/main/limitation.md) for detailed edge cases.
 
 ## ⚙️ Configuration
 
