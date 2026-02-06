@@ -1,17 +1,28 @@
 #!/usr/bin/env node
 
+/**
+ * CLI entry point for ctx.
+ * Scans a directory, parses exports, and prints a formatted tree.
+ *
+ * @example
+ * npx ctx ./src
+ */
+
 import path from "path";
-import { scan } from "./scanner.js";
-import { parse } from "./parser.js";
 import { format } from "./formatter.js";
+import { parse } from "./parser.js";
+import { scan } from "./scanner.js";
 
 const args = process.argv.slice(2);
 const targetPath = args[0] || ".";
 
+/**
+ * Main CLI execution flow.
+ * Orchestrates scanning → parsing → formatting.
+ */
 async function main() {
   const dir = path.resolve(process.cwd(), targetPath);
 
-  // Scan
   const files = await scan(dir);
 
   if (files.length === 0) {
@@ -19,10 +30,8 @@ async function main() {
     process.exit(1);
   }
 
-  // Parse
   const parsed = await Promise.all(files.map(parse));
 
-  // Format and print
   console.log(format(parsed, dir));
 }
 

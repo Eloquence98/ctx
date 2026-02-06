@@ -1,14 +1,32 @@
 import path from "path";
 import type { ParsedFile } from "./types.js";
 
+/**
+ * Internal tree node for building directory structure.
+ */
 interface TreeNode {
+  /** Directory or file name */
   name: string;
+  /** Export names (only for files) */
   exports?: string[];
+  /** Child nodes (subdirectories and files) */
   children: Map<string, TreeNode>;
 }
 
+/**
+ * Formats parsed files into a tree-style string representation.
+ *
+ * @param files - Array of parsed files
+ * @param baseDir - Root directory path for relative path calculation
+ * @returns Formatted tree string
+ *
+ * @example
+ * const output = format(parsedFiles, "/project/src");
+ * // src/
+ * // ├─ index.ts → main
+ * // └─ utils.ts → format, parse
+ */
 export function format(files: ParsedFile[], baseDir: string): string {
-  // Build tree structure
   const root: TreeNode = { name: path.basename(baseDir), children: new Map() };
 
   for (const file of files) {
@@ -35,7 +53,6 @@ export function format(files: ParsedFile[], baseDir: string): string {
     }
   }
 
-  // Render tree
   const lines: string[] = [];
   lines.push(root.name + "/");
   renderTree(root, "", lines);
@@ -43,6 +60,13 @@ export function format(files: ParsedFile[], baseDir: string): string {
   return lines.join("\n");
 }
 
+/**
+ * Recursively renders tree nodes into formatted lines.
+ *
+ * @param node - Current tree node
+ * @param prefix - Indentation prefix for current depth
+ * @param lines - Output array to append lines to
+ */
 function renderTree(node: TreeNode, prefix: string, lines: string[]): void {
   const children = [...node.children.values()];
 
@@ -52,7 +76,6 @@ function renderTree(node: TreeNode, prefix: string, lines: string[]): void {
     const connector = isLast ? "└─ " : "├─ ";
     const extension = isLast ? "   " : "│  ";
 
-    // Is it a file (has exports defined) or folder?
     const isFile = child.exports !== undefined;
 
     if (isFile) {
