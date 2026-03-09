@@ -1,6 +1,6 @@
 {
   "name": "export-tree",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Zero-config CLI that prints your project's directory tree with every export. Gitignore-aware, code-files only. Paste-ready for AI prompts or quick onboarding.",
   "type": "module",
   "bin": {
