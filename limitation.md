@@ -1,10 +1,10 @@
 # Limitations
 
-ctx is intentionally shallow. These limitations are by design.
+export-tree is intentionally shallow. These limitations are by design.
 
 ## Export detection limitations
 
-ctx only detects exports that match simple, static patterns via regex.
+export-tree only detects exports that match simple, static patterns via regex.
 
 ### ES Module exports detected
 
@@ -39,7 +39,7 @@ ctx only detects exports that match simple, static patterns via regex.
 - Indirect CommonJS: `module.exports = require('./other')`
 - Anything generated dynamically
 
-If an export is not trivially readable from source text, ctx ignores it.
+If an export is not trivially readable from source text, export-tree ignores it.
 
 ## File and directory scanning limitations
 
@@ -47,19 +47,20 @@ If an export is not trivially readable from source text, ctx ignores it.
 - Symlinks are not followed
 - Deep directory trees may be slow or hit recursion limits
 - Hidden files and directories (starting with `.`) are skipped
-- Ignored directories include: `node_modules`, `.git`, `dist`, `build`, `.next`, env files, editor folders, `coverage`, etc.
+- Ignored directories include: `node_modules`, `.git`, `dist`, `build`,
+  `.next`, env files, editor folders, `coverage`, etc.
 - Test files (`.test.*`, `.spec.*`) are ignored
 
 ## Structural limitations
 
-- ctx does not understand imports or dependencies
-- ctx does not infer architecture, ownership, or intent
-- ctx does not validate correctness
-- ctx does not execute code
+- export-tree does not understand imports or dependencies
+- export-tree does not infer architecture, ownership, or intent
+- export-tree does not validate correctness
+- export-tree does not execute code
 - Output order depends on filesystem traversal
 
 ## Philosophy
 
-ctx prefers truthful omission over incorrect inference.
+export-tree prefers truthful omission over incorrect inference.
 
 If something cannot be determined reliably, it is excluded.

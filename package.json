@@ -1,10 +1,11 @@
 {
-  "name": "@eloquence98/ctx",
-  "version": "0.4.1",
-  "description": "Generate a truthful structural map of your codebase for AI and humans.",
+  "name": "export-tree",
+  "version": "1.0.0",
+  "description": "Zero-config CLI that prints your project's directory tree with every export. Gitignore-aware, code-files only. Paste-ready for AI prompts or quick onboarding.",
   "type": "module",
   "bin": {
-    "ctx": "dist/cli.js"
+    "export-tree": "dist/cli.js",
+    "etree": "dist/cli.js"
   },
   "scripts": {
     "build": "tsc",
@@ -12,12 +13,19 @@
     "test": "tsx src/cli.ts ."
   },
   "keywords": [
-    "ai",
-    "context",
-    "codebase",
+    "directory-tree",
+    "export-tree",
+    "exports",
+    "tree",
+    "project-structure",
+    "codebase-map",
     "cli",
     "typescript",
-    "javascript"
+    "javascript",
+    "ai-context",
+    "llm",
+    "code-map",
+    "onboarding"
   ],
   "author": "Eloquence98",
   "license": "MIT",

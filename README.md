@@ -1,22 +1,24 @@
-# ctx
+# export-tree
 
-Dump a truthful structural index of a codebase.
+Zero-config CLI that prints your project's directory tree with every export.
+Gitignore-aware, code-files only. Paste-ready for AI prompts or quick onboarding.
 
-No analysis. No opinions. No guessing.
+> **Migrating from `@eloquence98/ctx`?** This is the same tool, renamed.
+> Run `npm uninstall -g @eloquence98/ctx` then `npm i -g export-tree`.
 
-ctx scans a directory and prints a map of folders, files, and trivially detectable exported symbols. It tells you exactly what exists — nothing more, nothing less.
+---
 
 ## Quick Start
 
 No installation required. Run it directly with npx:
 
 ```bash
-npx @eloquence98/ctx ./path-to-project
+npx export-tree ./path-to-project
 ```
 
 ## What It Does
 
-ctx provides a high-level map of a project. It identifies:
+export-tree provides a high-level structural map of a project. It identifies:
 
 - Folders
 - Files
@@ -33,7 +35,6 @@ src/
 └─ components/
    ├─ button.tsx → Button
    ├─ modal.tsx → Modal, ModalProps
-   └─ styles.css
 ```
 
 Files whose exports cannot be determined are listed without symbols.
@@ -52,7 +53,7 @@ Files whose exports cannot be determined are listed without symbols.
 
 When working with LLMs, new contributors, or legacy codebases, you don't always need the content of the files immediately, you need to understand the topology of the project first.
 
-ctx gives you that map.
+export-tree gives you that map.
 
 1.  Copy the output.
 2.  Paste it into an LLM context window.
@@ -60,7 +61,7 @@ ctx gives you that map.
 
 ## What It Does Not Do
 
-ctx is intentionally shallow. That is why it is reliable.
+export-tree is intentionally shallow. That is why it is reliable.
 
 - Does not interpret architecture or infer domains
 - Does not explain code intent
@@ -74,7 +75,7 @@ See [LIMITATIONS.md](https://github.com/Eloquence98/ctx/blob/main/limitation.md)
 
 No configuration required.
 
-ctx automatically ignores:
+export-tree automatically ignores:
 
 - `node_modules`, `.git`
 - Build outputs (`dist`, `build`, `.next`)
@@ -87,15 +88,23 @@ Only `.ts`, `.tsx`, `.js`, `.jsx` files are scanned. Both ES module and CommonJS
 ## Install (optional)
 
 ```bash
-npm install -g @eloquence98/ctx
-ctx ./src
+npm i -g export-tree
+```
+
+Then run:
+
+```bash
+export-tree ./src
+# or the shorter alias
+etree ./src
 ```
 
 ## Philosophy
 
 Don't explain the code. Show the codebase as it exists.
 
-ctx prefers truthful omission over incorrect inference. If something cannot be determined reliably, it is excluded.
+export-tree prefers truthful omission over incorrect inference.
+If something cannot be determined reliably, it is excluded.
 
 ## License
 
