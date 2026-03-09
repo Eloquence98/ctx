@@ -31,9 +31,9 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Eloquence98/ctx.git"
+    "url": "git+https://github.com/Eloquence98/export-tree.git"
   },
-  "homepage": "https://github.com/Eloquence98/ctx",
+  "homepage": "https://github.com/Eloquence98/export-tree",
   "files": [
     "dist"
   ],

@@ -69,7 +69,7 @@ export-tree is intentionally shallow. That is why it is reliable.
 - Does not read `node_modules`, `.git`, or environment files
 - Does not parse re-exports, barrel files, or computed names
 
-See [LIMITATIONS.md](https://github.com/Eloquence98/ctx/blob/main/limitation.md) for detailed edge cases.
+See [LIMITATIONS.md](https://github.com/Eloquence98/export-tree/blob/main/limitation.md) for detailed edge cases.
 
 ## Configuration
 
