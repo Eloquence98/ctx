@@ -50,6 +50,7 @@ If an export is not trivially readable from source text, export-tree ignores it.
 - Ignored directories include: `node_modules`, `.git`, `dist`, `build`,
   `.next`, env files, editor folders, `coverage`, etc.
 - Test files (`.test.*`, `.spec.*`) are ignored
+- Only selected project and configuration files are displayed without export parsing; arbitrary project files are not included.
 
 ## Structural limitations
 

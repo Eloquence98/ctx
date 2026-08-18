@@ -1,9 +1,9 @@
+import { mkdir, mkdtemp, rm, writeFile } from "fs/promises";
 import assert from "node:assert/strict";
-import { mkdtemp, mkdir, rm, writeFile } from "fs/promises";
+import { test } from "node:test";
 import os from "os";
 import path from "path";
-import { test } from "node:test";
-import { scan } from "../src/scanner.js";
+import { isDisplayOnlyFile, scan } from "../src/scanner.js";
 
 test("scan honors the target directory's root .gitignore", async () => {
   const dir = await mkdtemp(path.join(os.tmpdir(), "export-tree-"));
@@ -30,4 +30,13 @@ test("scan honors the target directory's root .gitignore", async () => {
   } finally {
     await rm(dir, { recursive: true, force: true });
   }
+});
+
+test("display-only project files are recognized", () => {
+  assert.equal(isDisplayOnlyFile("package.json"), true);
+  assert.equal(isDisplayOnlyFile("tsconfig.json"), true);
+  assert.equal(isDisplayOnlyFile("README.md"), true);
+  assert.equal(isDisplayOnlyFile("vite.config.ts"), true);
+  assert.equal(isDisplayOnlyFile("src.ts"), false);
+  assert.equal(isDisplayOnlyFile("data.json"), false);
 });

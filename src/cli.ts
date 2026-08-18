@@ -11,7 +11,7 @@
 import path from "path";
 import { format } from "./formatter.js";
 import { parse } from "./parser.js";
-import { scan } from "./scanner.js";
+import { isDisplayOnlyFile, scan } from "./scanner.js";
 
 const args = process.argv.slice(2);
 const targetPath = args[0] || ".";
@@ -30,7 +30,17 @@ async function main() {
     process.exit(1);
   }
 
-  const parsed = await Promise.all(files.map(parse));
+  const parsed = await Promise.all(
+    files.map((file) =>
+      isDisplayOnlyFile(path.basename(file))
+        ? {
+            path: file,
+            name: path.basename(file),
+            exports: [],
+          }
+        : parse(file),
+    ),
+  );
 
   console.log(format(parsed, dir));
 }

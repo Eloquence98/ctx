@@ -84,7 +84,9 @@ export-tree automatically ignores:
 - Hidden files and directories
 - Rules from the target directory's root `.gitignore`
 
-Only `.ts`, `.tsx`, `.js`, `.jsx` files are scanned. Both ES module and CommonJS exports are detected.
+Source files (`.ts`, `.tsx`, `.js`, `.jsx`) are scanned for exports. Common project and configuration files are included in the tree without export parsing.
+
+Display-only files include `package.json`, `tsconfig.json`, `jsconfig.json`, `README.md`, `LICENSE`, and common `*.config.*` files.
 
 ## Install (optional)
 

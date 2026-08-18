@@ -42,7 +42,8 @@ Recursively scans a directory for JavaScript/TypeScript files and ignores unnece
 - Uses `{ withFileTypes: true }` with `fs.readdir` so each entry can call `.isDirectory()`.
 - Applies the target directory's root `.gitignore` rules to paths relative to that directory.
 - Skips directories and files listed in `IGNORE` (e.g., `node_modules`, `.git`) and test files (`.test.`, `.spec.`).
-- Collects files with extensions listed in `EXTENSIONS` (`.ts`, `.tsx`, `.js`, `.jsx`).
+- Collects source files with extensions listed in `EXTENSIONS` (`.ts`, `.tsx`, `.js`, `.jsx`).
+- Includes selected project files and `*.config.*` files without export parsing.
 
 **Why it exists:**
 Centralizes file discovery in one place; avoids reimplementing scanning logic.

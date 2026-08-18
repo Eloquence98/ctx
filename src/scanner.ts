@@ -1,6 +1,6 @@
 import fs from "fs/promises";
-import path from "path";
 import ignore, { type Ignore } from "ignore";
+import path from "path";
 
 /** Directories and files always ignored by export-tree */
 const IGNORE = [
@@ -20,6 +20,23 @@ const IGNORE = [
 
 /** File extensions included in scan results */
 const EXTENSIONS = [".ts", ".tsx", ".js", ".jsx"];
+
+/** Files included in the tree without export parsing */
+const DISPLAY_ONLY_FILES = [
+  "package.json",
+  "tsconfig.json",
+  "jsconfig.json",
+  "README.md",
+  "LICENSE",
+];
+
+/** Returns whether a filename should be displayed without export parsing. */
+export function isDisplayOnlyFile(name: string): boolean {
+  return (
+    DISPLAY_ONLY_FILES.includes(name) ||
+    /\.config\.(js|cjs|mjs|ts|cts|mts)$/.test(name)
+  );
+}
 
 /**
  * Loads the target directory's .gitignore rules.
@@ -75,7 +92,10 @@ export async function scan(dir: string): Promise<string[]> {
 
       if (entry.isDirectory()) {
         await walk(full);
-      } else if (EXTENSIONS.includes(path.extname(entry.name))) {
+      } else if (
+        isDisplayOnlyFile(entry.name) ||
+        EXTENSIONS.includes(path.extname(entry.name))
+      ) {
         files.push(full);
       }
     }
