@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 
 /**
- * CLI entry point for ctx.
+ * CLI entry point for export-tree.
  * Scans a directory, parses exports, and prints a formatted tree.
  *
  * @example
- * npx ctx ./src
+ * npx export-tree ./src
  */
 
 import path from "path";
