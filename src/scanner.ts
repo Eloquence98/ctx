@@ -1,7 +1,8 @@
 import fs from "fs/promises";
 import path from "path";
+import ignore, { type Ignore } from "ignore";
 
-/** Directories and files to ignore during scanning */
+/** Directories and files always ignored by export-tree */
 const IGNORE = [
   "node_modules",
   ".git",
@@ -17,25 +18,42 @@ const IGNORE = [
   "coverage",
 ];
 
-/** File extensions to include in scan results */
+/** File extensions included in scan results */
 const EXTENSIONS = [".ts", ".tsx", ".js", ".jsx"];
 
 /**
+ * Loads the target directory's .gitignore rules.
+ */
+async function loadGitignore(dir: string): Promise<Ignore> {
+  const gitignore = ignore();
+
+  try {
+    const content = await fs.readFile(path.join(dir, ".gitignore"), "utf-8");
+
+    gitignore.add(content);
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code !== "ENOENT") {
+      throw error;
+    }
+  }
+
+  return gitignore;
+}
+
+/**
  * Recursively scans a directory for JavaScript/TypeScript files.
- * Ignores node_modules, build outputs, hidden files, and test files.
+ * Applies export-tree's built-in ignores and .gitignore rules.
  *
  * @param dir - The directory path to scan
  * @returns Array of absolute file paths
- *
- * @example
- * const files = await scan("./src");
- * // ["/project/src/index.ts", "/project/src/utils.ts", ...]
  */
 export async function scan(dir: string): Promise<string[]> {
   const files: string[] = [];
+  const gitignore = await loadGitignore(dir);
 
   async function walk(current: string) {
     let entries;
+
     try {
       entries = await fs.readdir(current, { withFileTypes: true });
     } catch {
@@ -49,6 +67,11 @@ export async function scan(dir: string): Promise<string[]> {
       if (entry.name.includes(".spec.")) continue;
 
       const full = path.join(current, entry.name);
+      const relative = path.relative(dir, full).split(path.sep).join("/");
+
+      if (gitignore.ignores(entry.isDirectory() ? `${relative}/` : relative)) {
+        continue;
+      }
 
       if (entry.isDirectory()) {
         await walk(full);

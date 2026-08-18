@@ -1,7 +1,7 @@
 # export-tree
 
 Zero-config CLI that prints your project's directory tree with every export.
-Gitignore-aware, code-files only. Paste-ready for AI prompts or quick onboarding.
+Gitignore-aware, code-files only. Honors the target directory's root `.gitignore`.
 
 > **Migrating from `@eloquence98/ctx`?** This is the same tool, renamed.
 > Run `npm uninstall -g @eloquence98/ctx` then `npm i -g export-tree`.
@@ -82,6 +82,7 @@ export-tree automatically ignores:
 - Environment files (`.env`)
 - Test files (`.test`., `.spec`.)
 - Hidden files and directories
+- Rules from the target directory's root `.gitignore`
 
 Only `.ts`, `.tsx`, `.js`, `.jsx` files are scanned. Both ES module and CommonJS exports are detected.
 

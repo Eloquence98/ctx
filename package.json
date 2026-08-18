@@ -10,7 +10,7 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsx src/cli.ts",
-    "test": "tsx src/cli.ts ."
+    "test": "tsx --test test/scanner.test.ts"
   },
   "keywords": [
     "directory-tree",

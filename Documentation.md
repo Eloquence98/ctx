@@ -38,8 +38,9 @@ Recursively scans a directory for JavaScript/TypeScript files and ignores unnece
 **How it works:**
 
 - `scan(dir: string)` returns an array of file paths.
-- Uses `walk(current: string)` internally to recursively traverse directories.
+- Loads `.gitignore` from the target directory, when present.
 - Uses `{ withFileTypes: true }` with `fs.readdir` so each entry can call `.isDirectory()`.
+- Applies the target directory's root `.gitignore` rules to paths relative to that directory.
 - Skips directories and files listed in `IGNORE` (e.g., `node_modules`, `.git`) and test files (`.test.`, `.spec.`).
 - Collects files with extensions listed in `EXTENSIONS` (`.ts`, `.tsx`, `.js`, `.jsx`).
 
@@ -49,6 +50,7 @@ Centralizes file discovery in one place; avoids reimplementing scanning logic.
 **Known limitations / edge cases:**
 
 - Does not follow symlinks.
+- Only the target directory's root `.gitignore` is loaded; nested `.gitignore` files are not currently processed.
 - Deeply nested directories could hit stack limits.
 - Only scans files with listed extensions; other valid JS/TS extensions are ignored.
 
